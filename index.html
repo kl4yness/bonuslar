@@ -1,430 +1,908 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Casino Bonusları</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
-            line-height: 1.4;
-            padding: 0;
-            margin: 0;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Arial", 
+          sans-serif;
+        font-weight: 500;
+        letter-spacing: 150%;
+        background: var(--tg-theme-bg-color, #ffffff);
+        color: var(--tg-theme-text-color, #000000);
+        line-height: 1.4;
+        padding: 0;
+        margin: 0;
+      }
 
-        .header {
-            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
-            padding: 16px;
-            text-align: center;
-            border-bottom: 1px solid var(--tg-theme-hint-color, #e5e5e5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+      .header {
+        background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+        padding: 16px;
+        text-align: center;
+        border-bottom: 1px solid var(--tg-theme-hint-color, #e5e5e5);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
 
-        .header h1 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #000000);
-        }
+      .header h1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--tg-theme-text-color, #000000);
+      }
 
-        .container {
-            padding: 0;
-            max-width: 100%;
-        }
+      .container {
+        padding: 0;
+        max-width: 100%;
+      }
 
+      .casino-item {
+        background: var(--tg-theme-bg-color, #ffffff);
+        border-bottom: 1px solid var(--tg-theme-hint-color, #e5e5e5);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .casino-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .casino-logo {
+        width: 75px;
+        height: 75px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #f0f0f0;
+        padding: 4px;
+      }
+
+      .casino-info {
+        flex: 1;
+      }
+
+      .casino-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--tg-theme-text-color, #000000);
+        margin-bottom: 4px;
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .stars {
+        color: #ffa500;
+        font-size: 14px;
+      }
+
+      .rating-value {
+        font-size: 14px;
+        color: var(--tg-theme-hint-color, #999999);
+        margin-left: 4px;
+      }
+
+      .bonus-section {
+        background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .bonus-text {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--tg-theme-text-color, #000000);
+        margin-bottom: 6px;
+      }
+
+      .bonus-code {
+        font-size: 12px;
+        color: var(--tg-theme-hint-color, #999999);
+      }
+
+      .payment-methods {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .payment-label {
+        font-size: 12px;
+        color: var(--tg-theme-hint-color, #999999);
+        min-width: 80px;
+      }
+
+      .payment-icons {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+
+      .payment-icon {
+        width: 40px;
+        height: 25px;
+        background: #f0f0f0;
+        border-radius: 2px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .signup-btn {
+        flex: 1;
+        background: var(--tg-theme-button-color, #0088cc);
+        color: var(--tg-theme-button-text-color, #ffffff);
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .signup-btn:hover {
+        opacity: 0.8;
+      }
+
+      .review-btn {
+        padding: 12px 16px;
+        background: transparent;
+        color: var(--tg-theme-link-color, #0088cc);
+        border: 1px solid var(--tg-theme-link-color, #0088cc);
+        border-radius: 8px;
+        font-size: 14px;
+        text-decoration: none;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .payout-speed {
+        font-size: 12px;
+        color: var(--tg-theme-hint-color, #999999);
+      }
+
+      @media (max-width: 480px) {
         .casino-item {
-            background: var(--tg-theme-bg-color, #ffffff);
-            border-bottom: 1px solid var(--tg-theme-hint-color, #e5e5e5);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .casino-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .casino-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            object-fit: contain;
-            background: #f0f0f0;
-            padding: 4px;
-        }
-
-        .casino-info {
-            flex: 1;
+          padding: 12px;
         }
 
         .casino-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--tg-theme-text-color, #000000);
-            margin-bottom: 4px;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .stars {
-            color: #ffa500;
-            font-size: 14px;
-        }
-
-        .rating-value {
-            font-size: 14px;
-            color: var(--tg-theme-hint-color, #999999);
-            margin-left: 4px;
-        }
-
-        .bonus-section {
-            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
-            padding: 12px;
-            border-radius: 8px;
+          font-size: 18px;
         }
 
         .bonus-text {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--tg-theme-text-color, #000000);
-            margin-bottom: 6px;
+          font-size: 14px;
         }
-
-        .bonus-code {
-            font-size: 12px;
-            color: var(--tg-theme-hint-color, #999999);
-        }
-
-        .payment-methods {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .payment-label {
-            font-size: 12px;
-            color: var(--tg-theme-hint-color, #999999);
-            min-width: 80px;
-        }
-
-        .payment-icons {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-
-        .payment-icon {
-            width: 24px;
-            height: 16px;
-            background: #f0f0f0;
-            border-radius: 2px;
-            font-size: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .signup-btn {
-            flex: 1;
-            background: var(--tg-theme-button-color, #0088cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            border: none;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .signup-btn:hover {
-            opacity: 0.8;
-        }
-
-        .review-btn {
-            padding: 12px 16px;
-            background: transparent;
-            color: var(--tg-theme-link-color, #0088cc);
-            border: 1px solid var(--tg-theme-link-color, #0088cc);
-            border-radius: 8px;
-            font-size: 14px;
-            text-decoration: none;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .payout-speed {
-            font-size: 12px;
-            color: var(--tg-theme-hint-color, #999999);
-        }
-
-        @media (max-width: 480px) {
-            .casino-item {
-                padding: 12px;
-            }
-            
-            .casino-name {
-                font-size: 16px;
-            }
-            
-            .bonus-text {
-                font-size: 13px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>🎰 En İyi Casino Bonusları</h1>
+      <h1>🎰 En İyi Casino Bonusları</h1>
     </div>
 
     <div class="container">
-        <!-- 1King -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="1King" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">1King</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- 1King -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/1king.png"
+            alt="1King"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">1King</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">%450 + 350 Free Spin</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="payment-methods">
-                <span class="payment-label">Ödeme:</span>
-                <div class="payment-icons">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-icon">🏦</div>
-                    <div class="payment-icon">📱</div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">%450 + 350 Free Spin</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">📱</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- Betkom -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="Betkom" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">Betkom</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- Betkom -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/betkom.jpg"
+            alt="Betkom"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Betkom</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.7/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">Yeni üyelere 500 freespin bedava! 5000₺ nakit veya 5000₺ fs ilk yatırım bonusu!</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="payment-methods">
-                <span class="payment-label">Ödeme:</span>
-                <div class="payment-icons">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-icon">🍎</div>
-                    <div class="payment-icon">₿</div>
-                    <div class="payment-icon">+15</div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">
+            Yeni üyelere 500 freespin bedava! 5000₺ nakit veya 5000₺ fs ilk
+            yatırım bonusu!
+          </div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+15</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- Betewin -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="Betewin" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">Betewin</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- Betewin -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/betewin.jpg"
+            alt="Betewin"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Betewin</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.9/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">1500₺ deneme bonusu</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">1500₺ deneme bonusu</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">+6</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- Bankobet -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="Bankobet" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">Bankobet</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- Bankobet -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/bankon.png"
+            alt="Bankobet"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Bankobet</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">1500 TL Deneme Bonusu ile 15000TL Çekim Şansı! SINIRSIZ ÇEKİM – KAT KURALSIZ SİTE!</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">
+            1500 TL Deneme Bonusu ile 15000TL Çekim Şansı! SINIRSIZ ÇEKİM – KAT
+            KURALSIZ SİTE!
+          </div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">+6</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- Casino-X -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="Casino-X" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">Casino-X</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- Casino-X -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/casinox.png"
+            alt="Casino-X"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Casino-X</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">Hesabınıza 200.000₺'ye kadar bonus kazanın</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">
+            Hesabınıza 200.000₺'ye kadar bonus kazanın
+          </div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">+6</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- Starzbet -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="Starzbet" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">Starzbet</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- Starzbet -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/starzbet.jpg"
+            alt="Starzbet"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Starzbet</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">750₺ deneme bonusu + %100 Hoşgeldin Bonusu</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="payment-methods">
-                <span class="payment-label">Ödeme:</span>
-                <div class="payment-icons">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-icon">🏦</div>
-                    <div class="payment-icon">🍎</div>
-                    <div class="payment-icon">+6</div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">
+            750₺ deneme bonusu + %100 Hoşgeldin Bonusu
+          </div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">+6</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
 
-        <!-- 1Win -->
-        <div class="casino-item">
-            <div class="casino-header">
-                <img src="/placeholder.svg?height=48&width=48" alt="1Win" class="casino-logo">
-                <div class="casino-info">
-                    <div class="casino-name">1Win</div>
-                    <div class="rating">
-                        <span class="stars">★★★★☆</span>
-                        <span class="rating-value">5.0/5</span>
-                    </div>
-                </div>
+      <!-- 1Win -->
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/1win.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">1Win</div>
+            <div class="rating">
+              <span class="stars">★★★☆☆</span>
+              <span class="rating-value">3.6/5</span>
             </div>
-            <div class="bonus-section">
-                <div class="bonus-text">Para yatırma için +%500 bonus + 75 FS</div>
-                <div class="bonus-code">🎫 Kod Gerekmiyor • Şartlar Geçerlidir</div>
-            </div>
-            <div class="payment-methods">
-                <span class="payment-label">Ödeme:</span>
-                <div class="payment-icons">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-icon">🏦</div>
-                    <div class="payment-icon">🍎</div>
-                    <div class="payment-icon">₿</div>
-                    <div class="payment-icon">+10</div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <a href="#" class="signup-btn">KAYDOL</a>
-                <a href="#" class="review-btn">İnceleme</a>
-            </div>
+          </div>
         </div>
+        <div class="bonus-section">
+          <div class="bonus-text">Para yatırma için +%500 bonus + 75 FS</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/bycasino.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">ByCasino</div>
+            <div class="rating">
+              <span class="stars">★★★☆☆</span>
+              <span class="rating-value">3.3/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">750₺ Deneme Bonusu + %100 Hoş Geldin Bonusu</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/tipobet.webp"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Tipobet</div>
+            <div class="rating">
+              <span class="stars">★★★☆☆</span>
+              <span class="rating-value">3/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">750₺ Deneme Bonusu + 30.000₺ Hoş Geldin Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/fixbet.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Fixbet</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.2/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">1000₺ Deneme Bonusu + %200 10.000₺ İlk Yatırım Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/sahabet.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Sahabet</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.2/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">1000₺ Deneme Bonusu + %300 45.000₺ nakit bonus
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/onwin.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Onwin</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">750₺ Deneme Bonusu + 36.000₺ Nakit Hoş Geldin Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/ligobet.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Ligobet</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">750₺ Deneme Bonusu + 20.000₺ Hoş Geldin Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/matadorbet.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Matadorbet</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">500₺ Deneme Bonusu + %200 10.000₺ Hoş Geldin Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/taksim.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Taksimbet</div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">%100 Hoş Geldin Bonusu + 200₺ Deneme Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/betpublic.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Betpublic</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">500₺ Deneme Bonusu + %100 Casino İlk Yatırım
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/twin.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">TwinPlay</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">%100 Hoş Geldin Bonusu ve 300 FS + 200₺ Deneme Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/supertoto.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Supertotobet</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">400₺ Ya Da 400₺ Deneme Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/paro.jpg"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Parobet</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">%100 Hoş Geldin Bonusu ve 300 FS + 200₺ Deneme Bonusu
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
+      <div class="casino-item">
+        <div class="casino-header">
+          <img
+            src="img/luks.png"
+            alt="1Win"
+            class="casino-logo"
+          />
+          <div class="casino-info">
+            <div class="casino-name">Lüks Casino</div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">5/5</span>
+            </div>
+          </div>
+        </div>
+        <div class="bonus-section">
+          <div class="bonus-text">%450 Bonus + 340 FS
+</div>
+        </div>
+        <div class="payment-methods">
+          <span class="payment-label">Ödeme:</span>
+          <div class="payment-icons">
+            <div class="payment-icon">💳</div>
+            <div class="payment-icon">🏦</div>
+            <div class="payment-icon">🍎</div>
+            <div class="payment-icon">₿</div>
+            <div class="payment-icon">+10</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="#" class="signup-btn">KAYDOL</a>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Telegram Web App initialization
-        if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-            tg.ready();
-            tg.expand();
-            
-            // Set main button
-            tg.MainButton.text = "Daha Fazla Casino";
-            tg.MainButton.show();
-            
-            // Handle main button click
-            tg.MainButton.onClick(() => {
-                tg.showAlert("Daha fazla casino seçeneği yakında!");
-            });
-            
-            // Handle signup button clicks
-            document.querySelectorAll('.signup-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const casinoName = e.target.closest('.casino-item').querySelector('.casino-name').textContent;
-                    tg.showConfirm(`${casinoName} sitesine kaydolmak istediğinizden emin misiniz?`, (confirmed) => {
-                        if (confirmed) {
-                            tg.showAlert("Kayıt işlemi başlatılıyor...");
-                        }
-                    });
-                });
-            });
-        }
+      // Telegram Web App initialization
+      if (window.Telegram && window.Telegram.WebApp) {
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // Handle signup button clicks
+        document.querySelectorAll(".signup-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const casinoName = e.target
+              .closest(".casino-item")
+              .querySelector(".casino-name").textContent;
+            tg.showConfirm(
+              `${casinoName} sitesine kaydolmak istediğinizden emin misiniz?`,
+              (confirmed) => {
+                if (confirmed) {
+                  tg.showAlert("Kayıt işlemi başlatılıyor...");
+                }
+              }
+            );
+          });
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
