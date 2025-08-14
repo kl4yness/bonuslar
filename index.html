@@ -724,26 +724,12 @@
         tg.expand();
 
         // Handle signup button clicks
-        document.querySelectorAll(".signup-btn").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const casinoName = e.target
-              .closest(".casino-item")
-              .querySelector(".casino-name").textContent;
-            tg.showConfirm(
-              `${casinoName} sitesine kaydolmak istediğinizden emin misiniz?`,
-              (confirmed) => {
-                if (confirmed) {
-                  tg.showAlert("Kayıt işlemi başlatılıyor...");
-                }
-              }
-            );
-          });
-        });
+    
       }
     </script>
   </body>
 </html>
+
 
 
 
